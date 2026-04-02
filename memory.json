@@ -1,0 +1,30 @@
+{
+  "knowledge": {
+    "lore": [],
+    "characters": [],
+    "factions": [],
+    "locations": []
+  },
+  "action_log": [
+    {
+      "time": "2026-03-30 15:21",
+      "action": "Created character card",
+      "details": "Zara the Healer in The Shattered Sky's"
+    }
+  ],
+  "created_cards": [
+    "Zara the Healer (character) in The Shattered Sky's"
+  ],
+  "created_maps": [],
+  "created_worlds": [],
+  "chat_history": [
+    {
+      "role": "user",
+      "content": "help"
+    },
+    {
+      "role": "assistant",
+      "content": "Done! Created a character card for **Zara the Healer** with lore-inspired description."
+    }
+  ]
+}
