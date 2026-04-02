@@ -21,6 +21,15 @@ WHAT YOU NEED
   - Intel Core Ultra processor (tested on Ultra 7 165H)
   - vvd.world account
 
+HOW TO INSTALL
+--------------
+1. Download all files
+    -unzip if zipped
+2. Open PowerShell and type cd "your file location here"
+3. Activate a virtual environment
+    - .venv/scripts/activate
+  4. type pip install requirements.txt
+  5. wait for it to finish installing
 
 HOW TO START
 ------------
