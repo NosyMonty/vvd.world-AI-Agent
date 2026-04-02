@@ -1,4 +1,3 @@
-================================================================================
   THE SHATTERED SKY — CAMPAIGN COMPENDIUM & WORLD GUIDE
   A Dungeons & Dragons Campaign
 ================================================================================
@@ -9,7 +8,6 @@ shards fall, empires rise and crumble. Where the rifts bleed, ancient horrors
 awaken. The sky has shattered. So has everything beneath it.
 
 
-================================================================================
   WORLD OVERVIEW: A WORLD REWRITTEN
 ================================================================================
 
@@ -31,7 +29,6 @@ collapsed into ruin, their cities buried under falling debris or swallowed by
 the strange new beasts that pour from the rifts.
 
 
-================================================================================
   THE SHARDS: ANATOMY OF A SKY SHARD
 ================================================================================
 
@@ -66,7 +63,6 @@ but also unpredictable. The Arcane Consortium would sell entire nations to claim
 one outright.
 
 
-================================================================================
   CAMPAIGN HOOKS: ADVENTURE FRAMEWORKS
 ================================================================================
 
@@ -103,7 +99,6 @@ Void Shard. The party's map of the world becomes obsolete every season as the
 shards slowly drift.
 
 
-================================================================================
   THE FIVE FACTIONS: POWERS OF THE BROKEN SKY
 ================================================================================
 
@@ -147,7 +142,6 @@ secret: their emperor died in the shattering. Someone, or something, is ruling
 in his place.
 
 
-================================================================================
   KEY LOCATIONS: WHERE THE SKY MEETS THE WORLD
 ================================================================================
 
@@ -194,7 +188,6 @@ in three days flat if you have the materials. Finding it requires knowing someon
 who lives there.
 
 
-================================================================================
   POSSIBLE VILLAINS: THE FORCES AGAINST
 ================================================================================
 
@@ -218,7 +211,6 @@ truth. Her crusade to prevent the rifts from being sealed is gaining followers,
 and she has begun making converts inside the Iron Sovereignty's officer corps.
 
 
-================================================================================
   THE CAELARI WARNING — ANCIENT PROPHECY
 ================================================================================
 
@@ -230,7 +222,6 @@ and she has begun making converts inside the Iron Sovereignty's officer corps.
   — Inscription found in Caelari ruin, Shard IX. Translation disputed.
 
 
-================================================================================
   ADVENTURE SEEDS: SESSION STARTERS
 ================================================================================
 
@@ -268,7 +259,6 @@ suspects the emperor is not what he appears. The party is invited, and everyone
 wants them to attend with secret instructions.
 
 
-================================================================================
   GAMEPLAY MECHANICS & PILLARS
 ================================================================================
 
@@ -311,7 +301,6 @@ at night. One or two may be sentient in ways that are not obvious until it is
 too late.
 
 
-================================================================================
   NARRATIVE THEMES: THE HEART OF THE CAMPAIGN
 ================================================================================
 
