@@ -47,7 +47,7 @@ jsonschema==4.26.0
 jsonschema-specifications==2025.9.1
 langchain-classic==1.0.3
 langchain-community==0.4.1
-langchain-core==1.2.22
+langchain-core==1.2.28
 langchain-ollama==1.0.1
 langchain-text-splitters==1.1.1
 langsmith==0.7.17
