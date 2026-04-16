@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {
   "knowledge": {
     "lore": [],
@@ -27,4 +28,66 @@
       "content": "Done! Created a character card for **Zara the Healer** with lore-inspired description."
     }
   ]
+=======
+{
+  "knowledge": {
+    "lore": [],
+    "characters": [],
+    "factions": [],
+    "locations": []
+  },
+  "action_log": [
+    {
+      "time": "2026-03-30 15:21",
+      "action": "Created character card",
+      "details": "Zara the Healer in The Shattered Sky's"
+    },
+    {
+      "time": "2026-04-07 09:44",
+      "action": "Created character card",
+      "details": "Test NPC in The Shattered Sky's Updated"
+    }
+  ],
+  "created_cards": [
+    "Zara the Healer (character) in The Shattered Sky's",
+    "Test NPC (character) in The Shattered Sky's Updated"
+  ],
+  "created_maps": [],
+  "created_worlds": [],
+  "chat_history": [
+    {
+      "role": "user",
+      "content": "create a character card for a mysterious traveller"
+    },
+    {
+      "role": "assistant",
+      "content": "What kind of world is this mysterious figure from?"
+    },
+    {
+      "role": "user",
+      "content": "a hell like relm where its only darkness and firey"
+    },
+    {
+      "role": "assistant",
+      "content": "What's the name of your campaign world?"
+    },
+    {
+      "role": "user",
+      "content": "the shattered skys"
+    },
+    {
+      "role": "user",
+      "content": "debug card"
+    },
+    {
+      "role": "user",
+      "content": "card debug"
+    },
+    {
+      "role": "assistant",
+      "content": "Done! ✓ Created: Kaelith Sun-Scorched"
+    }
+  ],
+  "sessions": {}
+>>>>>>> 8df96f4 (API added along with TUI and more streamlined folder structure)
 }

@@ -1,0 +1,327 @@
+# vvd.world AI Agent
+
+A locally-running AI agent that automates your [vvd.world](https://vvd.world) worldbuilding account. Type natural language commands and the agent logs in, navigates the site, and performs actions automatically — creating cards, building maps, managing your wiki, and more.
+
+Everything runs on your own machine. No cloud, no subscription, no data sent externally.
+
+---
+
+## Features
+
+- **Browser automation** — logs into vvd.world and controls it via Playwright
+- **Natural language commands** — powered by a local Ollama LLM
+- **Card creation** — character, location, faction, item, lore, event, magic system, creature, document
+- **Map management** — create maps and add interactive pins
+- **Wiki configuration** — set title, visibility, and styling
+- **Session notes** — create and store campaign session notes
+- **D&D web search** — Tavily-powered search for rules, spells, and monsters
+- **Campaign knowledge** — reads your lore files and uses them as context
+- **Memory** — remembers every action and everything you tell it
+- **FastAPI backend** — full REST API with persistent browser session
+- **Textual TUI** — hybrid terminal UI with sidebar, command bar, and live logs
+- **Intel Arc GPU acceleration** — via IPEX-LLM Ollama build
+
+---
+
+## Hardware Tested On
+
+| Component | Spec |
+|-----------|------|
+| CPU | Intel Core Ultra 7 165H |
+| GPU | Intel Arc iGPU (128 EU) |
+| RAM | 16GB |
+| OS | Windows 11 |
+
+---
+
+## Project Structure
+
+```
+vvw-agent/
+├── backend/
+│   ├── __init__.py
+│   ├── agent_core.py       # config, env vars, Ollama client
+│   ├── memory.py           # load/save memory.json
+│   ├── knowledge.py        # load knowledge files, build AI context
+│   ├── logs.py             # in-memory log queue for API + TUI
+│   ├── vision.py           # llava vision fallback for UI elements
+│   ├── browser.py          # login, world navigation
+│   ├── cards.py            # create, edit, delete, link cards
+│   ├── maps.py             # create maps, add pins
+│   ├── worlds.py           # create worlds, view graph
+│   ├── wiki.py             # configure wiki
+│   ├── sessions.py         # create session notes
+│   ├── search.py           # Tavily web search, Q&A, AI suggestions
+│   └── intent.py           # parse natural language into structured intent
+├── api/
+│   ├── __init__.py
+│   └── main.py             # FastAPI server with all endpoints
+├── tui/
+│   └── app.py              # Textual terminal UI
+├── knowledge/
+│   └── lore.md             # your campaign lore (add your own files here)
+├── agent.py                # legacy CLI entry point
+├── start_agent.bat         # one-click launcher for everything
+├── Modelfile               # Ollama model definition
+├── .env.example            # example environment variables
+├── requirements.txt        # Python dependencies
+└── README.md
+```
+
+---
+
+## Requirements
+
+- Windows 10/11
+- Python 3.10, 3.11, or 3.12 (3.13 has known Playwright issues on Windows)
+- [Ollama](https://ollama.com) — standard build, or IPEX-LLM build for Intel GPU
+- A [vvd.world](https://vvd.world) account
+- A [Tavily](https://app.tavily.com) API key (free tier) for D&D web search
+
+---
+
+## Installation
+
+**1. Clone the repository:**
+```bash
+git clone https://github.com/yourusername/vvw-agent.git
+cd vvw-agent
+```
+
+**2. Create and activate a virtual environment:**
+```bash
+python -m venv .venv
+.venv\Scripts\activate
+```
+
+**3. Install dependencies:**
+```bash
+pip install -r requirements.txt
+playwright install
+```
+
+**4. Copy the example environment file and fill in your details:**
+```bash
+copy .env.example .env
+```
+
+Edit `.env`:
+```
+VVW_EMAIL=your_email@example.com
+VVW_PASSWORD=your_password
+OLLAMA_MODEL=vvd-agent
+VISION_MODEL=llava
+TAVILY_API_KEY=tvly-your_key_here
+```
+
+**5. Pull the required Ollama models:**
+```bash
+ollama pull llama3.1:8b
+ollama pull llava
+```
+
+**6. Build the custom vvd-agent model:**
+```bash
+ollama create vvd-agent -f Modelfile
+```
+
+---
+
+## Usage
+
+### One-click launch (recommended)
+
+Double click `start_agent.bat`. This will:
+- Kill any existing Ollama processes
+- Start Ollama with Intel GPU support (if using IPEX-LLM build)
+- Start the FastAPI server
+- Start the Textual TUI
+
+### Manual launch
+
+**Terminal 1 — Start the API:**
+```bash
+uvicorn api.main:app
+```
+
+**Terminal 2 — Start the TUI:**
+```bash
+python tui/app.py
+```
+
+### Select your world first
+
+Before creating cards or maps, tell the agent which world to work in. Either type in the TUI:
+```
+switch to world The Shattered Sky
+```
+
+Or call the API directly:
+```
+POST http://localhost:8000/worlds/select
+{"world": "The Shattered Sky"}
+```
+
+---
+
+## Commands
+
+### Cards
+```
+create a character card for [name]
+create a location called [name]
+add a faction card for [name]
+edit [card name] description to [new text]
+delete the card for [name]
+link [card a] and [card b] as [relationship]
+```
+
+### Maps
+```
+create a map called [name]
+add a pin for [place] on the [map] map
+```
+
+### Worlds
+```
+create a new world called [name]
+switch to world [name]
+show me the relationship graph
+```
+
+### Wiki & Sessions
+```
+set the wiki title to [title]
+create a session note called [title]
+```
+
+### Knowledge & AI
+```
+remember that [lore fact]
+what do you know about my campaign?
+suggest what I should create next
+```
+
+### D&D Questions (web search)
+```
+how does the silence spell work in D&D 5e?
+what monsters live in the underdark?
+what are the rules for grappling?
+```
+
+### Special
+```
+help          — show command list
+wipe memory   — clear all stored memory
+card debug    — test card creation without AI
+quit          — exit
+```
+
+---
+
+## API Reference
+
+The FastAPI server runs at `http://localhost:8000`. Interactive docs at `http://localhost:8000/docs`.
+
+| Method | Endpoint | Description |
+|--------|----------|-------------|
+| GET | `/health` | Check API, browser, and Ollama status |
+| GET | `/worlds` | List all worlds |
+| POST | `/worlds/select` | Set active world |
+| POST | `/worlds/create` | Create a new world |
+| POST | `/worlds/graph` | Open relationship graph |
+| POST | `/intent` | Parse natural language into intent |
+| POST | `/cards/create` | Create a card |
+| POST | `/cards/edit` | Edit a card description |
+| POST | `/cards/delete` | Delete a card |
+| POST | `/cards/link` | Link two cards |
+| POST | `/maps/create` | Create a map |
+| POST | `/maps/pin` | Add a map pin |
+| POST | `/wiki/configure` | Configure wiki settings |
+| POST | `/sessions/create` | Create a session note |
+| POST | `/search` | D&D web search via Tavily |
+| POST | `/ask` | Ask a campaign question |
+| GET | `/suggest` | Get AI suggestions for new content |
+| POST | `/knowledge/add` | Add to campaign knowledge |
+| GET | `/knowledge/view` | View all knowledge and context |
+| GET | `/memory` | View full memory store |
+| DELETE | `/memory` | Wipe memory |
+| GET | `/logs` | Get live action logs |
+| DELETE | `/logs` | Clear logs |
+
+---
+
+## Intel GPU Acceleration
+
+Standard Ollama does not support Intel Arc GPUs. To enable GPU acceleration use the [IPEX-LLM Ollama build](https://github.com/intel/ipex-llm/releases):
+
+1. Download the Windows portable zip from the IPEX-LLM releases page
+2. Extract to `C:\ipex-ollama\`
+3. Use `start_agent.bat` — it automatically starts the GPU-accelerated Ollama server
+
+With GPU acceleration you can expect ~139 tokens/second vs ~13 on CPU.
+
+---
+
+## Knowledge Files
+
+Drop any `.md` or `.txt` files into the `knowledge/` folder and the agent will automatically read them and use them as context when creating cards and answering questions.
+
+Example:
+```
+knowledge/
+  lore.md        ← your world history and campaign notes
+  factions.md    ← faction details
+  characters.md  ← character backgrounds
+```
+
+---
+
+## Models Used
+
+| Model | Purpose |
+|-------|---------|
+| `vvd-agent` | Main model — llama3.1:8b with vvd.world knowledge baked in |
+| `llava` | Vision fallback — reads screenshots when CSS selectors fail |
+
+---
+
+## Troubleshooting
+
+**Browser doesn't open**
+- Make sure Ollama is running before starting the API
+- Try running `start_agent.bat` as Administrator
+- Check `http://localhost:8000/health` to see what's connected
+
+**500 errors on card creation**
+- Call `POST /worlds/select` first to set the active world
+- Check the API terminal for the full Python traceback
+
+**Slow responses**
+- Make sure you're using the IPEX-LLM build for Intel GPU
+- Check Task Manager → GPU tab — should spike when the model is thinking
+
+**Model not found**
+```bash
+cd C:\ipex-ollama
+ollama.exe create vvd-agent -f C:\path\to\vvw-agent\Modelfile
+```
+
+**Web search not working**
+- Check `TAVILY_API_KEY` is set correctly in `.env`
+- Sign up free at [app.tavily.com](https://app.tavily.com)
+
+---
+
+## Privacy
+
+- Everything runs locally — no data leaves your machine
+- Your credentials are stored only in `.env` on your computer
+- vvd.world itself has a zero AI training policy
+- The `.gitignore` excludes `.env`, `memory.json`, and your personal lore files
+
+---
+
+## License
+
+MIT License — feel free to fork, modify, and build on this.

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import asyncio
 import os
 import base64
@@ -988,3 +989,50 @@ async def main():
 
 if __name__ == "__main__":
     asyncio.run(main())
+=======
+import asyncio
+from playwright.async_api import async_playwright
+from backend.memory import load_memory, save_memory
+from backend.knowledge import load_knowledge_files
+from backend.browser import login, pick_world
+from backend.intent import parse_intent
+from backend.missing_info import get_missing_info  # created below
+
+async def main():
+    memory = load_memory()
+    chat_history = []
+
+    async with async_playwright() as p:
+        browser = await p.chromium.launch(headless=False)
+        page = await browser.new_page()
+
+        await login(page)
+
+        # Pick world
+        world = await pick_world(page, memory, None, None)
+        memory["active_world"] = world
+        save_memory(memory)
+
+        print("Agent ready.")
+
+        while True:
+            user_message = input("> ").strip()
+            if user_message.lower() in ("quit", "exit"):
+                break
+
+            chat_history.append({"role": "user", "content": user_message})
+
+            intent = await parse_intent(user_message, memory, chat_history)
+            missing = await get_missing_info(intent, memory)
+
+            if missing:
+                print(missing)
+                continue
+
+            print("Intent:", intent)
+
+    save_memory(memory)
+
+if __name__ == "__main__":
+    asyncio.run(main())
+>>>>>>> 8df96f4 (API added along with TUI and more streamlined folder structure)
